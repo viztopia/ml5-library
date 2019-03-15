@@ -22,7 +22,7 @@ import uNet from './UNET';
 
 const withPreload = {
   imageClassifier,
-}
+};
 
 module.exports = Object.assign({}, preloadRegister(withPreload), {
   uNet,
