@@ -18,12 +18,14 @@ import pix2pix from './Pix2pix/';
 import SketchRNN from './SketchRNN';
 import preloadRegister from './utils/p5PreloadHelper';
 import { version } from '../package.json';
+import uNet from './UNET';
 
 const withPreload = {
   imageClassifier,
-};
+}
 
 module.exports = Object.assign({}, preloadRegister(withPreload), {
+  uNet,
   KNNClassifier,
   featureExtractor,
   pitchDetection,
