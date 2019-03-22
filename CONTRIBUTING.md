@@ -197,9 +197,18 @@ NVM_HOMEBREW="/usr/local/opt/nvm/nvm.sh"
   console.log('Hello Test Development!');
   ```
 
-  If you now go to `http://localhost:8080/` and open the console, you should see `Hello Test Development!`. As you make changes, you will simply need to reload the `index.html` page to see them.
+  If you now go to `http://localhost:8080/` and open the console, you should see `Hello Test Development!`. As you make changes, you will simply need to reload the `index.html` page to see them. 
 
-5. Once you have finished testing, you can build the library. Just close the `webpack-dev-server` and run
+5. Once you have finished developing, you can run the tests and build the library. First run the tests:
+  
+  open up a terminal window in the ml5-library and run:
+  ```sh
+  yarn test
+  ```
+
+  if those test pass, then you're in good shape! you can move on to building the library!
+  
+  Just close the `webpack-dev-server` and run
 
   ```bash
   npm run build
