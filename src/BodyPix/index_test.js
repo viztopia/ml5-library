@@ -31,7 +31,23 @@ describe('bodyPix', () => {
     return canvas;
   }
 
-  beforeEach(async () => {
+  async function getImageData() {
+    const arr = new Uint8ClampedArray(40000);
+
+    // Iterate through every pixel
+    for (let i = 0; i < arr.length; i += 4) {
+      arr[i + 0] = 0;    // R value
+      arr[i + 1] = 190;  // G value
+      arr[i + 2] = 0;    // B value
+      arr[i + 3] = 255;  // A value
+    }
+
+    // Initialize a new ImageData object
+    const img = new ImageData(arr, 200);
+    return img;
+  }
+
+  beforeAll(async () => {
     jasmine.DEFAULT_TIMEOUT_INTERVAL = 5000;
     bp = await bodyPix();
   });
@@ -42,19 +58,27 @@ describe('bodyPix', () => {
     expect(bp.config.segmentationThreshold).toBe(BODYPIX_DEFAULTS.segmentationThreshold);
   });
 
+  it('segment takes ImageData', async () => {
+    const img = await getImageData();
+    const results = await bp.segment(img);
+    // 200 * 50 == 10,000 * 4 == 40,000 the size of the array
+    expect(results.segmentation.width).toBe(200);
+    expect(results.segmentation.height).toBe(50);
+  });
+
   describe('segmentation', () => {
     it('Should segment an image of a Harriet Tubman with a width and height of 128', async () => {
       const img = await getImage();
       await bp.segment(img)
         .then(results => {
-            expect(results.maskBackground.width).toBe(128);
-            expect(results.maskBackground.height).toBe(128);
+            expect(results.segmentation.width).toBe(128);
+            expect(results.segmentation.height).toBe(128);
 
-            expect(results.maskPerson.width).toBe(128);
-            expect(results.maskPerson.height).toBe(128);
+            expect(results.segmentation.width).toBe(128);
+            expect(results.segmentation.height).toBe(128);
 
-            expect(results.raw.width).toBe(128);
-            expect(results.raw.height).toBe(128);
+            expect(results.segmentation.width).toBe(128);
+            expect(results.segmentation.height).toBe(128);
 
         })
     });
